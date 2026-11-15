@@ -12,5 +12,8 @@ import java.util.Optional;
 public interface ClientRepository extends JpaRepository<Client, Long> {
     Optional<Client> findByEmail(String email);
 
-    boolean existsByEmail(@NotBlank(message = "Email is required") @Email(message = "Please enter a valid email address") String email);
+    boolean existsByEmail(
+            @NotBlank(message = "Email is required")
+            @Email(message = "Please enter a valid email address")
+            String email);
 }

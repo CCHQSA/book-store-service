@@ -86,6 +86,7 @@ class OrderServiceImplTest {
     @Test
     void confirmOrderAssignsEmployee() {
         Order order = new Order();
+        order.setClient(new Client(1L, "client@example.com", "hash", "Client", BigDecimal.ZERO));
         Employee employee = new Employee();
         employee.setEmail("employee@example.com");
         when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
