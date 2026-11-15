@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit profile</title>
+    <style>
+        main {
+            max-width: 600px;
+            margin: 1rem auto;
+        }
+
+        .field {
+            margin: 0.75rem 0;
+        }
+
+        label,
+        input {
+            display: block;
+        }
+
+        input {
+            box-sizing: border-box;
+            max-width: 100%;
+            width: 100%;
+        }
+
+        .error {
+            color: #b00020;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <h1>Edit profile</h1>
+    <p><strong>Email</strong>: <span th:text="${email}"></span></p>
+
+    <form th:action="@{/profile/edit}" th:object="${profileEditRequest}" method="post">
+        <div class="field">
+            <label for="name">Name</label>
+            <input id="name" type="text" th:field="*{name}" required>
+            <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+        </div>
+
+        <div class="field" th:if="${#authorization.expression('hasRole(''EMPLOYEE'')')}">
+            <label for="phone">Phone</label>
+            <input id="phone" type="tel" th:field="*{phone}" required>
+            <span class="error" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
+        </div>
+
+        <div class="field" th:if="${#authorization.expression('hasRole(''EMPLOYEE'')')}">
+            <label for="birthDate">Birth date</label>
+            <input id="birthDate" type="date" th:field="*{birthDate}" required>
+            <span class="error" th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></span>
+        </div>
+
+        <div class="field">
+            <label for="password">New password (leave blank to keep current password)</label>
+            <input id="password" type="password" th:field="*{password}" autocomplete="new-password">
+            <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+        </div>
+
+        <button type="submit">Save changes</button>
+    </form>
+    <p><a th:href="@{/profile}">Cancel</a></p>
+</main>
+</body>
+</html>

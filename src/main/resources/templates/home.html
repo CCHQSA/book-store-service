@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <style>
+        .button {
+            display: inline-block;
+            border: 1px solid #777;
+            border-radius: 3px;
+            padding: 0.4rem 0.7rem;
+            color: inherit;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <a class="button" th:href="@{/books}">View all books</a>
+    <a class="button" th:href="@{/profile}">Profile</a>
+    <a class="button" th:href="@{/orders/my}"
+       th:if="${#authorization.expression('hasRole(''CLIENT'')')}">My orders</a>
+    <a class="button" th:href="@{/orders}"
+       th:if="${#authorization.expression('hasRole(''EMPLOYEE'')')}">Manage orders</a>
+    <a class="button" th:href="@{/clients}"
+       th:if="${#authorization.expression('hasRole(''EMPLOYEE'')')}">Manage clients</a>
+    <a class="button" th:href="@{/basket}"
+       th:if="${#authorization.expression('hasRole(''CLIENT'')')}">Basket</a>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Orders</title>
+</head>
+<body>
+<main>
+    <h1 th:text="${employeeView} ? 'Orders' : 'My orders'">Orders</h1>
+    <p><a th:href="@{/home}">Home</a></p>
+    <p th:if="${#lists.isEmpty(orders)}">There are no orders.</p>
+    <section th:each="order : ${orders}">
+        <article>
+            <p><strong>Client</strong>:
+                <span th:text="${employeeView ? order.order.clientEmail : order.clientEmail}"></span></p>
+            <p><strong>Date</strong>:
+                <span th:text="${employeeView ? order.order.orderDate : order.orderDate}"></span></p>
+            <p><strong>Total</strong>:
+                <span th:text="${employeeView ? order.order.price : order.price}"></span></p>
+            <ul>
+                <li th:each="item : ${employeeView ? order.order.bookItems : order.bookItems}">
+                    <span th:text="${item.bookName}"></span> x <span th:text="${item.quantity}"></span>
+                </li>
+            </ul>
+            <form th:if="${employeeView and #authorization.expression('hasRole(''EMPLOYEE'')')
+                          and order.order.employeeEmail == null}"
+                  th:action="@{/orders/{id}/confirm(id=${order.id})}" method="post">
+                <button type="submit">Confirm order</button>
+            </form>
+            <p th:if="${employeeView and #authorization.expression('hasRole(''EMPLOYEE'')')
+                       and order.order.employeeEmail != null}">
+                <span>Confirmed by</span>
+                <span th:text="${order.order.employeeEmail}"></span>
+            </p>
+        </article>
+    </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Clients</title>
+</head>
+<body>
+<main>
+    <h1>Clients</h1>
+    <p><a th:href="@{/home}">Home</a></p>
+    <p th:if="${#lists.isEmpty(clients)}">There are no clients.</p>
+    <section th:each="client : ${clients}">
+        <p><strong th:text="${client.name}"></strong> (<span th:text="${client.email}"></span>)</p>
+        <p><span>Balance</span>: <span th:text="${client.balance}"></span></p>
+        <p th:text="${client.blocked} ? 'Blocked' : 'Active'">Active</p>
+        <form th:if="${#authorization.expression('hasRole(''EMPLOYEE'')') and !client.blocked}"
+              th:action="@{/clients/{email}/block(email=${client.email})}" method="post">
+            <button type="submit">Block account</button>
+        </form>
+        <form th:if="${#authorization.expression('hasRole(''EMPLOYEE'')') and client.blocked}"
+              th:action="@{/clients/{email}/unblock(email=${client.email})}" method="post">
+            <button type="submit">Unblock account</button>
+        </form>
+    </section>
+</main>
+</body>
+</html>

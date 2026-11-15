@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit book</title>
+    <style>
+        main {
+            max-width: 600px;
+            margin: 1rem auto;
+        }
+
+        .field {
+            margin: 0.75rem 0;
+        }
+        .error {
+            color: #b00020;
+        }
+
+        label,
+        input,
+        select,
+        textarea {
+            display: block;
+        }
+
+        input,
+        select,
+        textarea {
+            box-sizing: border-box;
+            max-width: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <h1>Edit book</h1>
+    <form th:action="@{/books/{name}/edit(name=${book.name})}" th:object="${book}" method="post">
+        <div class="field">
+            <label for="name">Name</label>
+            <input id="name" type="text" th:field="*{name}" required>
+            <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+        </div>
+
+        <div class="field">
+            <label for="author">Author</label>
+            <input id="author" type="text" th:field="*{author}" required>
+            <span class="error" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></span>
+        </div>
+
+        <div class="field">
+            <label for="genre">Genre</label>
+            <input id="genre" type="text" th:field="*{genre}" required>
+            <span class="error" th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}"></span>
+        </div>
+
+        <div class="field">
+            <label for="ageGroup">Age group</label>
+            <select id="ageGroup" th:field="*{ageGroup}" required>
+                <option value="CHILD">Child</option>
+                <option value="TEEN">Teen</option>
+                <option value="ADULT">Adult</option>
+                <option value="OTHER">Other</option>
+            </select>
+            <span class="error" th:if="${#fields.hasErrors('ageGroup')}" th:errors="*{ageGroup}"></span>
+        </div>
+
+        <div class="field">
+            <label for="price">Price</label>
+            <input id="price" type="number" th:field="*{price}" min="0" step="0.01" required>
+            <span class="error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
+        </div>
+
+        <div class="field">
+            <label for="publicationDate">Publication date</label>
+            <input id="publicationDate" type="date" th:field="*{publicationDate}" required>
+            <span class="error" th:if="${#fields.hasErrors('publicationDate')}" th:errors="*{publicationDate}"></span>
+        </div>
+
+        <div class="field">
+            <label for="pages">Pages</label>
+            <input id="pages" type="number" th:field="*{pages}" min="1" step="1" required>
+            <span class="error" th:if="${#fields.hasErrors('pages')}" th:errors="*{pages}"></span>
+        </div>
+
+        <div class="field">
+            <label for="language">Language</label>
+            <select id="language" th:field="*{language}" required>
+                <option th:each="language : ${T(com.epam.rd.autocode.spring.project.model.enums.Language).values()}"
+                        th:value="${language}"
+                        th:text="${#strings.capitalize(language.name().toLowerCase())}"></option>
+            </select>
+            <span class="error" th:if="${#fields.hasErrors('language')}" th:errors="*{language}"></span>
+        </div>
+
+        <div class="field">
+            <label for="characteristics">Characteristics</label>
+            <input id="characteristics" type="text" th:field="*{characteristics}">
+        </div>
+
+        <div class="field">
+            <label for="description">Description</label>
+            <textarea id="description" th:field="*{description}" rows="4"></textarea>
+        </div>
+
+        <button type="submit">Save changes</button>
+    </form>
+    <p><a th:href="@{/books}">Cancel</a></p>
+</main>
+</body>
+</html>

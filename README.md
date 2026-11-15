@@ -149,7 +149,7 @@ Consider the following additional features:
 > Use wrapper classes (like Long, Integer, etc.) instead of primitive types whenever possible.
 
 - Utilize `Lombok` for streamlined Java code.
-- Use `ModelMapper` for easy mapping between objects.
+- Use `BaseMapper` for easy mapping between objects.
 - Utilize `Thymeleaf` for HTML templating.
 - Explore the `test` folder to execute provided test cases for your solution.
 - Refer to the `main\resources\sql` folder for SQL scripts to initialize data.

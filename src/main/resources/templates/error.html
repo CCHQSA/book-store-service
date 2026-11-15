@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+</head>
+<body>
+<main>
+    <h1>Something went wrong</h1>
+    <p th:text="${status}">500</p>
+    <p th:if="${errorMessage != null}" th:text="${errorMessage}"></p>
+    <a th:href="@{/home}">Home</a>
+</main>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+</head>
+<body>
+<main>
+    <h1>Profile</h1>
+
+    <section th:if="${#authorization.expression('hasRole(''CLIENT'')') and client != null}">
+        <p><strong>Name</strong>: <span th:text="${client.name}"></span></p>
+        <p><strong>Email</strong>: <span th:text="${client.email}"></span></p>
+        <p><strong>Balance</strong>: <span th:text="${client.balance}"></span></p>
+    </section>
+
+    <section th:if="${#authorization.expression('hasRole(''EMPLOYEE'')') and employee != null}">
+        <p><strong>Name</strong>: <span th:text="${employee.name}"></span></p>
+        <p><strong>Email</strong>: <span th:text="${employee.email}"></span></p>
+        <p><strong>Phone</strong>: <span th:text="${employee.phone}"></span></p>
+        <p><strong>Birth date</strong>: <span th:text="${employee.birthDate}"></span></p>
+    </section>
+
+    <p><a th:href="@{/profile/edit}">Edit profile</a></p>
+    <form th:if="${#authorization.expression('hasRole(''CLIENT'')')}"
+          th:action="@{/profile/delete}" method="post"
+          onsubmit="return confirm('Are you sure you want to delete your account?');">
+        <button type="submit">Delete account</button>
+    </form>
+    <p><a th:href="@{/home}">Back to home</a></p>
+</main>
+</body>
+</html>
